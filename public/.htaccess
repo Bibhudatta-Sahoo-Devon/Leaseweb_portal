@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    #Auto bind the index file with route...
+    RewriteRule ^ index.php
+</IfModule>
