@@ -20,7 +20,7 @@ Now we have to set up the application, so run the below commands
 1.`docker-compose exec php-apache /bin/bash `   
 2.`cd ..`     
 3.`composer update --ignore-platform-req=ext-gd`  
-4.`php bin\console doctrine:migrations:migrate`  
+4.`php bin/console doctrine:migrations:migrate`  
 5. Do a Post API call on `http://localhost:8000/api/server/store` to store server details
 
 
