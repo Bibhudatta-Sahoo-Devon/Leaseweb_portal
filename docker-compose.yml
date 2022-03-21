@@ -13,6 +13,9 @@ services:
             - ./default.conf:/etc/apache2/sites-enabled/000-default.conf
         depends_on:
             - database
+        networks:
+            docker_network: {}
+
 
     database:
         image: mysql
@@ -26,4 +29,8 @@ services:
             MYSQL_DATABASE: leasewebdb
         volumes:
             - ./docker-db:/var/lib/mysql
+        networks:
+            docker_network: {}
 
+networks:
+    docker_network: {}

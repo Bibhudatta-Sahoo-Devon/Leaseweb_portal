@@ -8,6 +8,7 @@ use App\Repository\HarddiskRepository;
 use App\Repository\LocationRepository;
 use App\Repository\RamRepository;
 use App\Repository\ServerRepository;
+use App\Service\ExcelFileService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,19 +39,21 @@ class ServerController extends AbstractController
 
     /**
      * @route("store", name="store_data",methods={"POST"})
+     * @param ExcelFileService $excelFileService
+     * @return JsonResponse
      */
-    public function storeServerData(): JsonResponse
+    public function storeServerData(ExcelFileService $excelFileService): JsonResponse
     {
         try {
 
             $fileName = 'LeaseWeb_servers_filters_assignment.xlsx';
             $file =  __DIR__ . '/../../public/storage/'.$fileName;
-            $fileControllerObj = new FileController();
-            $fileData = $fileControllerObj->processServerFile($file);
+            $fileData = $excelFileService->processServerFile($file);
 
             if (!empty($fileData['serverData'])){
                 $serverData = $fileData['serverData'];
                 $filterData = $fileData['filterData'];
+
                 $allRam = array_unique(array_column($serverData,'ram'));
                 $allHdd = array_unique(array_column($serverData,'hdd'));
                 $allLocation = array_unique(array_column($serverData,'location'));
@@ -63,7 +66,6 @@ class ServerController extends AbstractController
                 if ($storeStatus && count($filterData)>3){
                     $this->filterRepository->storeFilterDetails($filterData);
                 }
-
                 return new JsonResponse(['message'=>'Server details stored successfully'],Response::HTTP_CREATED);
             }
             return new JsonResponse(['error'=>'Server details not found'],Response::HTTP_BAD_REQUEST);
