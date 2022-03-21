@@ -2,19 +2,18 @@ version: '3.1'
 
 services:
     php-apache:
-        container_name: apache-docker
+        container_name: leaseweb-apache-docker
         build:
             context: .
             dockerfile: Dockerfile
         ports:
-            - 8000:80
+            - 8088:80
         volumes:
             - .:/var/www/html
             - ./default.conf:/etc/apache2/sites-enabled/000-default.conf
         depends_on:
             - database
-        networks:
-            docker_network: {}
+
 
 
     database:
@@ -29,8 +28,3 @@ services:
             MYSQL_DATABASE: leasewebdb
         volumes:
             - ./docker-db:/var/lib/mysql
-        networks:
-            docker_network: {}
-
-networks:
-    docker_network: {}

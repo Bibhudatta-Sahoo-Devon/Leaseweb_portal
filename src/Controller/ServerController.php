@@ -48,26 +48,24 @@ class ServerController extends AbstractController
     {
         try {
 
-            $fileName = 'LeaseWeb_servers_filters_assignment.xlsx';
-            $file =  __DIR__ . '/../../public/storage/'.$fileName;
-            $fileData = $excelFileService->processServerFile($file);
+            $filePath =  __DIR__ . '/../../public/storage/'.'LeaseWeb_servers_filters_assignment.xlsx';
+
+            $fileData = $excelFileService->processServerFile($filePath);
 
             if (!empty($fileData['serverData'])){
+
                 $serverData = $fileData['serverData'];
-                $filterData = $fileData['filterData'];
 
-                $allRam = array_unique(array_column($serverData,'ram'));
-                $allHdd = array_unique(array_column($serverData,'hdd'));
-                $allLocation = array_unique(array_column($serverData,'location'));
+                $ramData = $this->ramRepository->storeRamDetails(array_unique(array_column($serverData,'ram')));
+                $hddData = $this->harddiskRepository->storeHardDiskDetails(array_unique(array_column($serverData,'hdd')));
+                $locationData = $this->locationRepository->storeLocationDetails(array_unique(array_column($serverData,'location')));
 
-                $ramData = $this->ramRepository->storeRamDetails($allRam);
-                $hddData = $this->harddiskRepository->storeHardDiskDetails($allHdd);
-                $locationData = $this->locationRepository->storeLocationDetails($allLocation);
                 $storeStatus = $this->serverRepository->storeServerDetails($serverData,$ramData,$hddData,$locationData);
 
-                if ($storeStatus && count($filterData)>3){
-                    $this->filterRepository->storeFilterDetails($filterData);
+                if ($storeStatus && count($fileData['filterData'])>3){
+                    $this->filterRepository->storeFilterDetails($fileData['filterData']);
                 }
+
                 return new JsonResponse(['message'=>'Server details stored successfully'],Response::HTTP_CREATED);
             }
             return new JsonResponse(['error'=>'Server details not found'],Response::HTTP_BAD_REQUEST);
