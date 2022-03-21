@@ -127,7 +127,7 @@ class ServerRepository extends ServiceEntityRepository
                 ->setMaxResults($pageSize);
 
             $servers = $paginator->getIterator()->getArrayCopy();
-            
+
             $response = ['TotalSearchedServersCount'=>$totalSearchedServers, 'TotalPages'=>$pagesCount,'Data'=>$servers];
 
             if ($pagesCount > $page){

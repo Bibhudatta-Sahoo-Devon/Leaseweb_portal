@@ -27,6 +27,7 @@ class ServerController extends AbstractController
     private $locationRepository;
     private $serverRepository;
     private $filterRepository;
+
     public function __construct(RamRepository $ramRepository,HarddiskRepository $harddiskRepository,LocationRepository $locationRepository, ServerRepository $serverRepository,FiltersRepository $filterRepository)
     {
         $this->ramRepository = $ramRepository;
@@ -36,6 +37,7 @@ class ServerController extends AbstractController
         $this->filterRepository = $filterRepository;
 
     }
+
 
     /**
      * @route("store", name="store_data",methods={"POST"})

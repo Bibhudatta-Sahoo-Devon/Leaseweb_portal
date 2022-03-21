@@ -98,7 +98,7 @@ class HarddiskRepository extends ServiceEntityRepository
 
             if(isset($searchData['type']) && !empty($searchData['type'])){
                 $qb->where('h.type = :type');
-                $parameters['type'] = $searchData['type'];
+                $parameters['type'] = strtoupper($searchData['type']);
             }
 
             if(isset($searchData['size']['form']) && !empty($searchData['size']['form'])){
