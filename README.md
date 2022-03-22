@@ -15,16 +15,20 @@ This application to provide a portal through which user can see and choose a ser
 
 ## To Run The Application with Docker
 First download the reo from git 
-Start the docker with command -`docker-compose up -d`  or `docker-compose up --build`   
+Start the docker with command :  
+`docker-compose up -d`  or `docker-compose up --build`   
+
 Now we have to set up the application, so run the below commands   
 1.`docker-compose exec php-apache /bin/bash `   
 2.`cd ..`     
 3.`composer update --ignore-platform-req=ext-gd`  
 4.`php bin/console doctrine:migrations:migrate`  
-5. Do a Post API call on `http://localhost:8000/api/server/store` to store server details
+
+Store Server Details Post API call with  
+`http://localhost:8088/api/server/store` 
 
 
-Now you can search for the servers with `http://localhost:8000/api/search/servers/` API endpoint 
+Now you can search for the servers with `http://localhost:8088/api/search/servers/` API endpoint 
 
 ## API documentation
 
