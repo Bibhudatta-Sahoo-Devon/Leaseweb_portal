@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\unit;
-
 
 use App\Entity\Ram;
 use Doctrine\ORM\EntityManager;
@@ -36,6 +34,7 @@ class RamRepositoryTest extends KernelTestCase
         $ramObj->setName('4GBDDR3');
         $ramObj->setType('DDR3');
         $ramObj->setSize(4);
+
         $this->entityManager->persist($ramObj);
         $this->entityManager->flush();
 
@@ -66,7 +65,7 @@ class RamRepositoryTest extends KernelTestCase
     public function search_ram_record_ids_with_getRamSearchIds_method(){
         $ramRepository = $this->entityManager->getRepository(Ram::class);
         $ramIds = $ramRepository->getRamSearchIds(8);
+
         $this->assertEquals(1,count($ramIds));
     }
-
 }

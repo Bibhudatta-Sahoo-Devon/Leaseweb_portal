@@ -1,14 +1,11 @@
 <?php
 
-
 namespace App\Tests\feature;
-
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SearchServerControllerTest extends WebTestCase
 {
-
     /**
      * @test
      */
@@ -31,7 +28,6 @@ class SearchServerControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-
     /**
      * @test
      */
@@ -43,7 +39,6 @@ class SearchServerControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-
     /**
      * @test
      */
@@ -54,6 +49,4 @@ class SearchServerControllerTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(200);
     }
-
-
 }

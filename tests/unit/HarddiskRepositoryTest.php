@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\unit;
-
 
 use App\Entity\Harddisk;
 use Doctrine\ORM\EntityManager;
@@ -18,7 +16,6 @@ class HarddiskRepositoryTest extends KernelTestCase
     protected function setUp(): void
     {
         $kernel = self::bootKernel();
-//        TestDatabaseSchemaUpdate::updateSchema($kernel);
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
     }
 
@@ -33,11 +30,11 @@ class HarddiskRepositoryTest extends KernelTestCase
      */
     public function insert_a_record_to_harddisk_table()
     {
-
         $harddiskObj = new Harddisk();
         $harddiskObj->setName('4x2TBSATA2');
         $harddiskObj->setType('SATA');
         $harddiskObj->setSize(8000);
+
         $this->entityManager->persist($harddiskObj);
         $this->entityManager->flush();
 
@@ -81,10 +78,9 @@ class HarddiskRepositoryTest extends KernelTestCase
      */
     public function search_harddisk_record_ids_for_size_with_getHardDiskSearchIds_method()
     {
-
         $harddiskRepository = $this->entityManager->getRepository(Harddisk::class);
         $harddiskRecordIds = $harddiskRepository->getHardDiskSearchIds(['size' => ['form'=>'1000','to'=>'8000']]);
+
         $this->assertEquals(5, count($harddiskRecordIds));
     }
-
 }

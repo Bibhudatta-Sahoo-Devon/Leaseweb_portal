@@ -20,6 +20,5 @@ if (isset($_ENV['BOOTSTRAP_RESET_DATABASE']) && $_ENV['BOOTSTRAP_RESET_DATABASE'
         'php "%s/../bin/console" doctrine:schema:update --env=test --force --no-interaction --no-debug',
         __DIR__
     ));
-
 }
 require __DIR__.'/../vendor/autoload.php';

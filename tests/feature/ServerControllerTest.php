@@ -2,12 +2,10 @@
 
 namespace App\Tests\feature;
 
-
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ServerControllerTest extends WebTestCase
 {
-
     /**
      * @test
      */
