@@ -17,18 +17,14 @@ class ApiExceptionListener
     {
         $exception = $event->getThrowable();
 
-        $message = sprintf('ERROR :  %s ', $exception->getMessage());
-
-        $response = new JsonResponse();
-        $response->setContent($message);
-
+        $response = new JsonResponse(['error'=>$exception->getMessage()]);
 
         if ($exception instanceof ApiCustomException) {
+
             $status = $exception->getStatusCode();
-
             $status = ($status > 100) ? $status : Response::HTTP_INTERNAL_SERVER_ERROR;
-
         } elseif ($exception instanceof HttpExceptionInterface) {
+
             $status = $exception->getStatusCode();
             $response->headers->replace($exception->getHeaders());
         } else {

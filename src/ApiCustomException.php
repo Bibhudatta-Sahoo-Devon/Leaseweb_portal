@@ -12,5 +12,4 @@ class ApiCustomException extends HttpException
     {
         parent::__construct($statusCode, $message, $previous, $headers, $code);
     }
-
 }
