@@ -16,11 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class SearchController
  * @package App\Controller
  * @route("/api/search/", name="search.")
+ *
  */
 class SearchController extends AbstractController
 {
     private $serverRepository;
     private $serverFilterService;
+
     public function __construct(ServerRepository $serverRepository, ServerFilterService $serverFilterService)
     {
         $this->serverRepository = $serverRepository;
@@ -39,17 +41,14 @@ class SearchController extends AbstractController
             $filterData = $this->serverFilterService->refactorParameters($request);
 
             $parameters = $request->query->all();
-            $parameters['page'] = $page+1;
+            $parameters['page'] = $page + 1;
             $nextUrl = $this->generateUrl('search.server', $parameters, UrlGeneratorInterface::ABS_URL);
 
-            $servers = $this->serverRepository->searchServerDetails($filterData,$page,$nextUrl);
+            $servers = $this->serverRepository->searchServerDetails($filterData, $page, $nextUrl);
 
-            return new JsonResponse($servers,Response::HTTP_OK);
-        }catch (\Exception $exception){
-            throw new ApiCustomException($exception->getCode(),$exception->getMessage());
+            return new JsonResponse($servers, Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            throw new ApiCustomException($exception->getCode(), $exception->getMessage());
         }
     }
-
-
-
 }
