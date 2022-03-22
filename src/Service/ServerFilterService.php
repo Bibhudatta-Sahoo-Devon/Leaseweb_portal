@@ -22,6 +22,7 @@ class ServerFilterService
         $this->locationRepository = $locationRepository;
 
     }
+
     /**
      * @param Request $request
      * @return array
@@ -63,7 +64,9 @@ class ServerFilterService
                     }
                 }
             }
+
             return $filterData;
+
         }catch (Exception $exception){
             throw $exception;
         }
@@ -84,9 +87,9 @@ class ServerFilterService
             }
 
             return $refactorSize;
+
         }catch (Exception $exception){
             throw $exception;
         }
     }
-
 }

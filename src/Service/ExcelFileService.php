@@ -34,7 +34,6 @@ class ExcelFileService
     public function processServerFile($file): array
     {
         try {
-
             $serverData = $filterData = [];
             if (file_exists($file)) {
 
@@ -71,6 +70,7 @@ class ExcelFileService
                 $serverDetails['hddData'] = $this->harddiskRepository->storeHardDiskDetails(array_unique(array_column($serverData, 'hdd')));
                 $serverDetails['locationData'] = $this->locationRepository->storeLocationDetails(array_unique(array_column($serverData, 'location')));
             }
+
             return ['serverDetails' => $serverDetails, 'filterData' => $filterData];
 
         } catch (\Exception $exception) {
