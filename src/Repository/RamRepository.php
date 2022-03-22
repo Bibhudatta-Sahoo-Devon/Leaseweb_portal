@@ -109,6 +109,4 @@ class RamRepository extends ServiceEntityRepository
             throw $exception;
         }
     }
-
-
 }

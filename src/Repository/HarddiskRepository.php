@@ -92,7 +92,6 @@ class HarddiskRepository extends ServiceEntityRepository
     public function getHardDiskSearchIds($searchData): array
     {
         try {
-
             $parameters = $ids = [];
             $qb = $this->createQueryBuilder('h')->select('h.id');
 
@@ -105,6 +104,7 @@ class HarddiskRepository extends ServiceEntityRepository
                 $qb->andWhere('h.size >= :formSize');
                 $parameters['formSize'] = $searchData['size']['form'];
             }
+
             if(isset($searchData['size']['to']) && !empty($searchData['size']['to'])){
                 $qb->andWhere('h.size <= :toSize');
                 $parameters['toSize'] = $searchData['size']['to'];

@@ -59,10 +59,10 @@ class FiltersRepository extends ServiceEntityRepository
                 $filter->setType($data['type']);
                 $filter->setValue($value);
 
-
                 $this->_em->persist($filter);
                 $flush = true;
             }
+
             if ($flush) {
                 $this->_em->flush();
             }

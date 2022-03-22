@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Location;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 
@@ -83,7 +81,6 @@ class LocationRepository extends ServiceEntityRepository
     public function getLocationSearchId($locationName): array
     {
         try {
-
             $parameters = $ids = [];
             $qb = $this->createQueryBuilder('l')->select('l.id');
 

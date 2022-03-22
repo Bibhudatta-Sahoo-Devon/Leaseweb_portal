@@ -2,13 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Ram;
 use App\Entity\Server;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * @method Server|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,11 +40,12 @@ class ServerRepository extends ServiceEntityRepository
             $records = $this->findBy(['model' => $allModels]);
 
             if (!empty($records)) {
-                foreach ($records as $data) {//todo array key = model+ram+hdd+location+price
+                foreach ($records as $data) {
                     $key = implode('-', $data->getAllData());
                     $presentRecords[$key] = $data;
                 }
             }
+
             foreach ($serverData as $data) {
 
                 $data['price'] = preg_replace("[A-Za-z]", "", $data['price']);
@@ -62,7 +61,6 @@ class ServerRepository extends ServiceEntityRepository
                     $this->_em->persist($server);
                     $insertFlag = true;
                 }
-
             }
 
             if ($insertFlag)
@@ -73,7 +71,6 @@ class ServerRepository extends ServiceEntityRepository
         } catch (Exception $exception) {
             throw $exception;
         }
-
     }
 
     /**
@@ -81,10 +78,9 @@ class ServerRepository extends ServiceEntityRepository
      * @return int|mixed|string
      * @throws Exception
      */
-    public function searchServerDetails($filters,$page,$nextUrl)
+    public function searchServerDetails($filters, $page, $nextUrl)
     {
         try {
-
             $parameters = [];
 
             $queryKeys = [
@@ -123,14 +119,16 @@ class ServerRepository extends ServiceEntityRepository
             $pagesCount = ceil($totalSearchedServers / $pageSize);
 
             $paginator->getQuery()
-                ->setFirstResult($pageSize * ($page-1))
+                ->setFirstResult($pageSize * ($page - 1))
                 ->setMaxResults($pageSize);
 
-            $servers = $paginator->getIterator()->getArrayCopy();
+            $response = [
+                'TotalSearchedServersCount' => $totalSearchedServers,
+                'TotalPages' => $pagesCount,
+                'Data' => $paginator->getIterator()->getArrayCopy()
+            ];
 
-            $response = ['TotalSearchedServersCount'=>$totalSearchedServers, 'TotalPages'=>$pagesCount,'Data'=>$servers];
-
-            if ($pagesCount > $page){
+            if ($pagesCount > $page) {
                 $response['Next Page'] = urldecode($nextUrl);
             }
 
@@ -140,6 +138,4 @@ class ServerRepository extends ServiceEntityRepository
             throw $exception;
         }
     }
-
-
 }
