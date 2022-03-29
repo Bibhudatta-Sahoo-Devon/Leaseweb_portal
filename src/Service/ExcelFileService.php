@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Repository\HarddiskRepository;
 use App\Repository\LocationRepository;
